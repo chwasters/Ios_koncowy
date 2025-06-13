@@ -7,13 +7,15 @@ workflows:
   ios-development:
     name: iOS Development Build
     instance_type: mac_mini_m1
-    max_build_duration: 60
-    environment:
+    max_build_duration: 60    environment:
       vars:
         XCODE_PROJECT: "bartek.xcodeproj"
         XCODE_SCHEME: "bartek"
         BUNDLE_ID: "com.jacooo13.bartek"
-      xcode: 15.2    scripts:      - name: Debug project structure
+      xcode: 15.2
+    
+    scripts:
+      - name: Debug project structure
         script: |
           echo "=== Checking project structure ==="
           ls -la "$CM_BUILD_DIR/"
