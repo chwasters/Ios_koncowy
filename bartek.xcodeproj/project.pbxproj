@@ -6,17 +6,32 @@
 	objectVersion = 56;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		DF0526EE2DF1FEDB00EAAEF6 /* bartekApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0526F02DF1FEDC00EAAEF6 /* bartekApp.swift */; };
+		DF0526EF2DF1FEDB00EAAEF6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0526F12DF1FEDC00EAAEF6 /* ContentView.swift */; };
+		DF0526F22DF1FEDC00EAAEF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF0526F32DF1FEDC00EAAEF6 /* Assets.xcassets */; };
+		DF0526F42DF1FEDC00EAAEF6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF0526F52DF1FEDC00EAAEF6 /* Preview Assets.xcassets */; };
+		DF0526F62DF1FEDC00EAAEF6 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0526F72DF1FEDC00EAAEF6 /* Persistence.swift */; };
+		DF0526F82DF1FEDC00EAAEF6 /* bartek.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DF0526F92DF1FEDC00EAAEF6 /* bartek.xcdatamodeld */; };
+		DF0526FA2DF1FEDC00EAAEF6 /* CarDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0526FB2DF1FEDC00EAAEF6 /* CarDetailView.swift */; };
+		DF0526FC2DF1FEDC00EAAEF6 /* ReservationFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0526FD2DF1FEDC00EAAEF6 /* ReservationFormView.swift */; };
+		DF0526FE2DF1FEDC00EAAEF6 /* ReservationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0526FF2DF1FEDC00EAAEF6 /* ReservationListView.swift */; };
+		DF0527002DF1FEDC00EAAEF6 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0527012DF1FEDC00EAAEF6 /* Models.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		DF0526EB2DF1FEDB00EAAEF6 /* bartek.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bartek.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF0526F02DF1FEDC00EAAEF6 /* bartekApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bartekApp.swift; sourceTree = "<group>"; };
+		DF0526F12DF1FEDC00EAAEF6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		DF0526F32DF1FEDC00EAAEF6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DF0526F52DF1FEDC00EAAEF6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		DF0526F72DF1FEDC00EAAEF6 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		DF0526FA2DF1FEDC00EAAEF6 /* bartek.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = bartek.xcdatamodel; sourceTree = "<group>"; };
+		DF0526FB2DF1FEDC00EAAEF6 /* CarDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarDetailView.swift; sourceTree = "<group>"; };
+		DF0526FD2DF1FEDC00EAAEF6 /* ReservationFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationFormView.swift; sourceTree = "<group>"; };
+		DF0526FF2DF1FEDC00EAAEF6 /* ReservationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationListView.swift; sourceTree = "<group>"; };
+		DF0527012DF1FEDC00EAAEF6 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		DF0526ED2DF1FEDB00EAAEF6 /* bartek */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = bartek;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		DF0526E82DF1FEDB00EAAEF6 /* Frameworks */ = {
@@ -45,12 +60,37 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		DF0526ED2DF1FEDB00EAAEF6 /* bartek */ = {
+			isa = PBXGroup;
+			children = (
+				DF0526F02DF1FEDC00EAAEF6 /* bartekApp.swift */,
+				DF0526F12DF1FEDC00EAAEF6 /* ContentView.swift */,
+				DF0526FB2DF1FEDC00EAAEF6 /* CarDetailView.swift */,
+				DF0526FD2DF1FEDC00EAAEF6 /* ReservationFormView.swift */,
+				DF0526FF2DF1FEDC00EAAEF6 /* ReservationListView.swift */,
+				DF0527012DF1FEDC00EAAEF6 /* Models.swift */,
+				DF0526F72DF1FEDC00EAAEF6 /* Persistence.swift */,
+				DF0526F92DF1FEDC00EAAEF6 /* bartek.xcdatamodeld */,
+				DF0526F32DF1FEDC00EAAEF6 /* Assets.xcassets */,
+				DF0526F62DF1FEDC00EAAEF6 /* Preview Content */,
+			);
+			path = bartek;
+			sourceTree = "<group>";
+		};
+		DF0526F62DF1FEDC00EAAEF6 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				DF0526F52DF1FEDC00EAAEF6 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
 		DF0526EA2DF1FEDB00EAAEF6 /* bartek */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DF0526FB2DF1FEDD00EAAEF6 /* Build configuration list for PBXNativeTarget "bartek" */;
+			buildConfigurationList = DF0526FE2DF1FEDC00EAAEF6 /* Build configuration list for PBXNativeTarget "bartek" */;
 			buildPhases = (
 				DF0526E72DF1FEDB00EAAEF6 /* Sources */,
 				DF0526E82DF1FEDB00EAAEF6 /* Frameworks */,
@@ -60,12 +100,7 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				DF0526ED2DF1FEDB00EAAEF6 /* bartek */,
-			);
 			name = bartek;
-			packageProductDependencies = (
-			);
 			productName = bartek;
 			productReference = DF0526EB2DF1FEDB00EAAEF6 /* bartek.app */;
 			productType = "com.apple.product-type.application";
@@ -77,15 +112,16 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1630;
-				LastUpgradeCheck = 1630;
+				LastSwiftUpdateCheck = 1520;
+				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					DF0526EA2DF1FEDB00EAAEF6 = {
-						CreatedOnToolsVersion = 16.3;
+						CreatedOnToolsVersion = 15.2;
 					};
 				};
 			};
 			buildConfigurationList = DF0526E62DF1FEDB00EAAEF6 /* Build configuration list for PBXProject "bartek" */;
+			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -93,8 +129,6 @@
 				Base,
 			);
 			mainGroup = DF0526E22DF1FEDB00EAAEF6;
-			minimizedProjectReferenceProxies = 1;
-			preferredProjectObjectVersion = 77;
 			productRefGroup = DF0526EC2DF1FEDB00EAAEF6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -109,6 +143,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF0526F42DF1FEDC00EAAEF6 /* Preview Assets.xcassets in Resources */,
+				DF0526F22DF1FEDC00EAAEF6 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,13 +155,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF0526F82DF1FEDC00EAAEF6 /* bartek.xcdatamodeld in Sources */,
+				DF0526F62DF1FEDC00EAAEF6 /* Persistence.swift in Sources */,
+				DF0526EF2DF1FEDB00EAAEF6 /* ContentView.swift in Sources */,
+				DF0526EE2DF1FEDB00EAAEF6 /* bartekApp.swift in Sources */,
+				DF0526FA2DF1FEDC00EAAEF6 /* CarDetailView.swift in Sources */,
+				DF0526FC2DF1FEDC00EAAEF6 /* ReservationFormView.swift in Sources */,
+				DF0526FE2DF1FEDC00EAAEF6 /* ReservationListView.swift in Sources */,
+				DF0527002DF1FEDC00EAAEF6 /* Models.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		DF0526F92DF1FEDD00EAAEF6 /* Debug */ = {
+		DF0526FC2DF1FEDC00EAAEF6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -160,7 +204,6 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = NVD5D37C4Z;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -178,7 +221,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -189,7 +232,7 @@
 			};
 			name = Debug;
 		};
-		DF0526FA2DF1FEDD00EAAEF6 /* Release */ = {
+		DF0526FD2DF1FEDC00EAAEF6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -224,7 +267,6 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = NVD5D37C4Z;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -236,7 +278,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -246,14 +288,14 @@
 			};
 			name = Release;
 		};
-		DF0526FC2DF1FEDD00EAAEF6 /* Debug */ = {
+		DF0526FF2DF1FEDC00EAAEF6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = NVD5D37C4Z;
+				DEVELOPMENT_ASSET_PATHS = "\"bartek/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -266,7 +308,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jacooo13.bartek;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.bartek;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -274,14 +316,14 @@
 			};
 			name = Debug;
 		};
-		DF0526FD2DF1FEDD00EAAEF6 /* Release */ = {
+		DF05270002DF1FEDC00EAAEF6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = NVD5D37C4Z;
+				DEVELOPMENT_ASSET_PATHS = "\"bartek/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -294,13 +336,52 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jacooo13.bartek;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.bartek;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DF0526E62DF1FEDB00EAAEF6 /* Build configuration list for PBXProject "bartek" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DF0526FC2DF1FEDC00EAAEF6 /* Debug */,
+				DF0526FD2DF1FEDC00EAAEF6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DF0526FE2DF1FEDC00EAAEF6 /* Build configuration list for PBXNativeTarget "bartek" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DF0526FF2DF1FEDC00EAAEF6 /* Debug */,
+				DF05270002DF1FEDC00EAAEF6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		DF0526F92DF1FEDC00EAAEF6 /* bartek.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				DF0526FA2DF1FEDC00EAAEF6 /* bartek.xcdatamodel */,
+			);
+			currentVersion = DF0526FA2DF1FEDC00EAAEF6 /* bartek.xcdatamodel */;
+			path = bartek.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = DF0526E32DF1FEDB00EAAEF6 /* Project object */;
+}
 		};
 /* End XCBuildConfiguration section */
 
