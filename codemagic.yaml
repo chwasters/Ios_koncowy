@@ -7,7 +7,9 @@ workflows:
   ios-development:
     name: iOS Development Build
     instance_type: mac_mini_m1
-    max_build_duration: 60    environment:
+    max_build_duration: 60
+    
+    environment:
       vars:
         XCODE_PROJECT: "bartek.xcodeproj"
         XCODE_SCHEME: "bartek"
@@ -35,8 +37,7 @@ workflows:
           if grep -q "objectVersion = 77" "$CM_BUILD_DIR/$XCODE_PROJECT/project.pbxproj"; then
             echo "Found Xcode 16 project format, attempting to downgrade..."
             # Zamień objectVersion na kompatybilną z Xcode 15
-            sed -i.bak 's/objectVersion = 77;/objectVersion = 56;/g' "$CM_BUILD_DIR/$XCODE_PROJECT/project.pbxproj"
-            echo "Project format downgraded to Xcode 15 compatibility"
+            sed -i.bak 's/objectVersion = 77;/objectVersion = 56;/g' "$CM_BUILD_DIR/$XCODE_PROJECT/project.pbxproj"            echo "Project format downgraded to Xcode 15 compatibility"
           else
             echo "Project format appears compatible"
           fi
@@ -46,7 +47,8 @@ workflows:
           # Keychains are not persisted for free tier, set up fresh each time if manual signing is used.
           # For automatic signing or builds without distribution, this might not be needed.
           echo "Skipping keychain setup for basic build"
-        - name: Build project for iOS Simulator (with fallback)
+      
+      - name: Build project for iOS Simulator (with fallback)
         script: |
           set -eo pipefail # Exit on error
           
