@@ -13,26 +13,74 @@ workflows:
         XCODE_PROJECT: "bartek.xcodeproj"
         XCODE_SCHEME: "bartek"
         BUNDLE_ID: "com.jacooo13.bartek"
-      xcode: 15.2
-    scripts:
+      xcode: 15.2    scripts:      - name: Debug project structure
+        script: |
+          echo "=== Checking project structure ==="
+          ls -la "$CM_BUILD_DIR/"
+          echo "=== Checking xcodeproj content ==="
+          ls -la "$CM_BUILD_DIR/bartek.xcodeproj/"
+          echo "=== Checking project.pbxproj ==="
+          head -20 "$CM_BUILD_DIR/$XCODE_PROJECT/project.pbxproj"
+          echo "=== Checking objectVersion ==="
+          grep "objectVersion" "$CM_BUILD_DIR/$XCODE_PROJECT/project.pbxproj"
+          echo "=== Trying to validate project ==="
+          xcodebuild -project "$CM_BUILD_DIR/$XCODE_PROJECT" -list || echo "Project validation failed"
+      
+      - name: Fix project compatibility (if needed)
+        script: |
+          echo "=== Attempting to fix project compatibility ==="
+          # Sprawdź czy projekt ma objectVersion = 77 (Xcode 16)
+          if grep -q "objectVersion = 77" "$CM_BUILD_DIR/$XCODE_PROJECT/project.pbxproj"; then
+            echo "Found Xcode 16 project format, attempting to downgrade..."
+            # Zamień objectVersion na kompatybilną z Xcode 15
+            sed -i.bak 's/objectVersion = 77;/objectVersion = 56;/g' "$CM_BUILD_DIR/$XCODE_PROJECT/project.pbxproj"
+            echo "Project format downgraded to Xcode 15 compatibility"
+          else
+            echo "Project format appears compatible"
+          fi
+      
       - name: Set up keychain for code signing (optional, if needed)
         script: |
           # Keychains are not persisted for free tier, set up fresh each time if manual signing is used.
           # For automatic signing or builds without distribution, this might not be needed.
           echo "Skipping keychain setup for basic build"
-      
-      - name: Build project for iOS Simulator
+        - name: Build project for iOS Simulator (with fallback)
         script: |
           set -eo pipefail # Exit on error
-
-          xcodebuild build \
+          
+          echo "=== Trying primary build method ==="
+          if xcodebuild build \
             -project "$CM_BUILD_DIR/$XCODE_PROJECT" \
             -scheme "$XCODE_SCHEME" \
             -sdk iphonesimulator \
             -configuration Debug \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
-            PRODUCT_BUNDLE_IDENTIFIER="$BUNDLE_ID"
+            PRODUCT_BUNDLE_IDENTIFIER="$BUNDLE_ID"; then
+            echo "Primary build succeeded"
+          else
+            echo "Primary build failed, trying alternative approach..."
+            
+            # Próba 1: Użyj domyślnego scheme
+            echo "=== Trying with default scheme ==="
+            xcodebuild build \
+              -project "$CM_BUILD_DIR/$XCODE_PROJECT" \
+              -sdk iphonesimulator \
+              -configuration Debug \
+              CODE_SIGN_IDENTITY="" \
+              CODE_SIGNING_REQUIRED=NO \
+              PRODUCT_BUNDLE_IDENTIFIER="$BUNDLE_ID" || \
+            
+            # Próba 2: Bez specyfikacji scheme
+            echo "=== Trying without scheme specification ==="
+            xcodebuild \
+              -project "$CM_BUILD_DIR/$XCODE_PROJECT" \
+              -sdk iphonesimulator \
+              -configuration Debug \
+              CODE_SIGN_IDENTITY="" \
+              CODE_SIGNING_REQUIRED=NO \
+              build
+          fi
       
       - name: Build project for iOS Device (without signing)
         script: |
