@@ -3,164 +3,54 @@
 # Data: 13.06.2025
 
 workflows:
-  # Workflow deweloperski - szybki build bez podpisywania
+  # Workflow deweloperski - uproszczony build bez podpisywania (idealny dla studentów)
   ios-development:
     name: iOS Development Build
-    instance_type: mac_mini_m2
+    instance_type: mac_mini_m1
     max_build_duration: 60
     environment:
-      ios_signing:
-        distribution_type: development
-        bundle_identifier: com.jacooo13.bartek
       vars:
-        XCODE_WORKSPACE: "bartek.xcworkspace"  # Używaj jeśli masz workspace
-        XCODE_PROJECT: "bartek.xcodeproj"      # Używaj jeśli masz tylko projekt
-        XCODE_SCHEME: "bartek"
-        BUNDLE_ID: "com.jacooo13.bartek"
-      xcode: latest
-      cocoapods: default
-    triggering:
-      events:
-        - push
-        - pull_request
-      branch_patterns:
-        - pattern: '*'
-          include: true
-          source: true
-      cancel_previous_builds: true
-    cache:
-      cache_paths:
-        - $HOME/Library/Caches/CocoaPods
-        - $HOME/Library/Developer/Xcode/DerivedData
-    scripts:
-      - name: Sprawdź środowisko Xcode
-        script: |
-          xcodebuild -version
-          xcodebuild -showsdks
-      
-      - name: Instaluj zależności CocoaPods (jeśli istnieją)
-        script: |
-          if [ -f "Podfile" ]; then
-            echo "Znaleziono Podfile, instaluję CocoaPods..."
-            pod install
-          else
-            echo "Brak Podfile, pomijam instalację CocoaPods"
-          fi
-      
-      - name: Sprawdź konfigurację projektu
-        script: |
-          if [ -f "$XCODE_WORKSPACE" ]; then
-            echo "Używam workspace: $XCODE_WORKSPACE"
-            xcodebuild -workspace "$XCODE_WORKSPACE" -list
-          else
-            echo "Używam projektu: $XCODE_PROJECT"
-            xcodebuild -project "$XCODE_PROJECT" -list
-          fi
-      
-      - name: Build aplikacji dla symulatora
-        script: |
-          if [ -f "$XCODE_WORKSPACE" ]; then
-            xcodebuild \
-              -workspace "$XCODE_WORKSPACE" \
-              -scheme "$XCODE_SCHEME" \
-              -sdk iphonesimulator \
-              -destination 'platform=iOS Simulator,name=iPhone 15,OS=latest' \
-              clean build
-          else
-            xcodebuild \
-              -project "$XCODE_PROJECT" \
-              -scheme "$XCODE_SCHEME" \
-              -sdk iphonesimulator \
-              -destination 'platform=iOS Simulator,name=iPhone 15,OS=latest' \
-              clean build
-          fi
-    
-    artifacts:
-      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
-      - /tmp/xcodebuild_logs/*.log
-    
-    publishing:
-      email:
-        recipients:
-          - jakub.nowosad@student.example.com  # Zmień na swój email
-        notify:
-          success: true
-          failure: true
-
-  # Workflow release - pełny build z podpisywaniem dla App Store
-  ios-release:
-    name: iOS Release Build
-    instance_type: mac_mini_m2
-    max_build_duration: 120
-    integrations:
-      app_store_connect: codemagic  # Nazwa klucza API z ustawień Codemagic
-    environment:
-      ios_signing:
-        distribution_type: app_store
-        bundle_identifier: com.jacooo13.bartek
-      vars:
-        XCODE_WORKSPACE: "bartek.xcworkspace"
         XCODE_PROJECT: "bartek.xcodeproj"
         XCODE_SCHEME: "bartek"
         BUNDLE_ID: "com.jacooo13.bartek"
-        APP_STORE_APPLE_ID: 1234567890  # Zmień na swoje Apple ID aplikacji
-      xcode: latest
-      cocoapods: default
-    triggering:
-      events:
-        - tag
-      tag_patterns:
-        - pattern: 'v*'
-          include: true
-      cancel_previous_builds: false
-    cache:
-      cache_paths:
-        - $HOME/Library/Caches/CocoaPods
-        - $HOME/Library/Developer/Xcode/DerivedData
+      xcode: 15.2
     scripts:
-      - name: Sprawdź środowisko Xcode
+      - name: Set up keychain for code signing (optional, if needed)
         script: |
-          xcodebuild -version
-          xcodebuild -showsdks
+          # Keychains are not persisted for free tier, set up fresh each time if manual signing is used.
+          # For automatic signing or builds without distribution, this might not be needed.
+          echo "Skipping keychain setup for basic build"
       
-      - name: Instaluj zależności CocoaPods (jeśli istnieją)
+      - name: Build project for iOS Simulator
         script: |
-          if [ -f "Podfile" ]; then
-            echo "Znaleziono Podfile, instaluję CocoaPods..."
-            pod install
-          else
-            echo "Brak Podfile, pomijam instalację CocoaPods"
-          fi
+          set -eo pipefail # Exit on error
+
+          xcodebuild build \
+            -project "$CM_BUILD_DIR/$XCODE_PROJECT" \
+            -scheme "$XCODE_SCHEME" \
+            -sdk iphonesimulator \
+            -configuration Debug \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            PRODUCT_BUNDLE_IDENTIFIER="$BUNDLE_ID"
       
-      - name: Skonfiguruj profile prowizji
-        script: xcode-project use-profiles
-      
-      - name: Zwiększ numer build
+      - name: Build project for iOS Device (without signing)
         script: |
-          cd $CM_BUILD_DIR
-          # Pobierz najnowszy numer build z App Store Connect
-          LATEST_BUILD_NUMBER=$(app-store-connect get-latest-app-store-build-number "$APP_STORE_APPLE_ID")
-          echo "Najnowszy numer build w App Store: $LATEST_BUILD_NUMBER"
-          # Zwiększ numer build o 1
-          agvtool new-version -all $(($LATEST_BUILD_NUMBER + 1))
-      
-      - name: Build IPA dla dystrybucji
-        script: |
-          if [ -f "$XCODE_WORKSPACE" ]; then
-            xcode-project build-ipa \
-              --workspace "$CM_BUILD_DIR/$XCODE_WORKSPACE" \
-              --scheme "$XCODE_SCHEME"
-          else
-            xcode-project build-ipa \
-              --project "$CM_BUILD_DIR/$XCODE_PROJECT" \
-              --scheme "$XCODE_SCHEME"
-          fi
+          set -eo pipefail # Exit on error
+
+          xcodebuild build \
+            -project "$CM_BUILD_DIR/$XCODE_PROJECT" \
+            -scheme "$XCODE_SCHEME" \
+            -sdk iphoneos \
+            -configuration Release \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            PRODUCT_BUNDLE_IDENTIFIER="$BUNDLE_ID"
     
     artifacts:
-      - build/ios/ipa/*.ipa
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/Products/Debug-iphonesimulator/*.app
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/Products/Release-iphoneos/*.app
       - /tmp/xcodebuild_logs/*.log
-      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
-      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
     
     publishing:
       email:
@@ -169,66 +59,29 @@ workflows:
         notify:
           success: true
           failure: true
-      
-      app_store_connect:
-        auth: integration
-        
-        # Konfiguracja TestFlight
-        submit_to_testflight: true
-        expire_build_submitted_for_review: true
-        beta_groups:
-          - "Internal Testers"
-        
-        # Konfiguracja App Store (domyślnie wyłączona)
-        submit_to_app_store: false
-        cancel_previous_submissions: false
-        release_type: MANUAL
 
   # Workflow testowy - uruchamianie testów jednostkowych
   ios-testing:
     name: iOS Unit Tests
-    instance_type: mac_mini_m2
+    instance_type: mac_mini_m1
     max_build_duration: 30
     environment:
       vars:
-        XCODE_WORKSPACE: "bartek.xcworkspace"
         XCODE_PROJECT: "bartek.xcodeproj"
         XCODE_SCHEME: "bartek"
-      xcode: latest
-      cocoapods: default
-    triggering:
-      events:
-        - push
-        - pull_request
-      branch_patterns:
-        - pattern: '*'
-          include: true
-          source: true
-    cache:
-      cache_paths:
-        - $HOME/Library/Caches/CocoaPods
+      xcode: 15.2
     scripts:
-      - name: Instaluj zależności CocoaPods (jeśli istnieją)
+      - name: Run unit tests
         script: |
-          if [ -f "Podfile" ]; then
-            pod install
-          fi
-      
-      - name: Uruchom testy jednostkowe
-        script: |
-          if [ -f "$XCODE_WORKSPACE" ]; then
-            xcodebuild test \
-              -workspace "$XCODE_WORKSPACE" \
-              -scheme "$XCODE_SCHEME" \
-              -sdk iphonesimulator \
-              -destination 'platform=iOS Simulator,name=iPhone 15,OS=latest'
-          else
-            xcodebuild test \
-              -project "$XCODE_PROJECT" \
-              -scheme "$XCODE_SCHEME" \
-              -sdk iphonesimulator \
-              -destination 'platform=iOS Simulator,name=iPhone 15,OS=latest'
-          fi
+          set -eo pipefail # Exit on error
+          
+          xcodebuild test \
+            -project "$CM_BUILD_DIR/$XCODE_PROJECT" \
+            -scheme "$XCODE_SCHEME" \
+            -sdk iphonesimulator \
+            -destination 'platform=iOS Simulator,name=iPhone 15,OS=latest' \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO
     
     artifacts:
       - /tmp/xcodebuild_logs/*.log
@@ -240,14 +93,3 @@ workflows:
         notify:
           success: false  # Nie wysyłaj emaila przy sukcesie testów
           failure: true   # Tylko przy niepowodzeniu
-
-# Definicje wielokrotnego użytku (opcjonalne)
-definitions:
-  env_versions: &env_versions
-    xcode: latest
-    cocoapods: default
-  
-  cache_paths: &cache_paths
-    cache_paths:
-      - $HOME/Library/Caches/CocoaPods
-      - $HOME/Library/Developer/Xcode/DerivedData
