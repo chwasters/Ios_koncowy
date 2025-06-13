@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
+    <entity name="Car" representedClassName="Car" syncable="YES" codeGenerationType="class">
+        <attribute name="brand" optional="NO" attributeType="String"/>
+        <attribute name="model" optional="NO" attributeType="String"/>
+        <attribute name="year" optional="NO" attributeType="Integer 16" defaultValue="0" usesScalarValueType="YES"/>
+        <attribute name="pricePerDay" optional="NO" attributeType="Double" defaultValue="0.0" usesScalarValueType="YES"/>
+        <attribute name="isAvailable" optional="NO" attributeType="Boolean" defaultValue="YES" usesScalarValueType="YES"/>
+        <attribute name="imageName" optional="YES" attributeType="String"/>
+        <attribute name="fuelType" optional="NO" attributeType="String"/>
+        <attribute name="seatsCount" optional="NO" attributeType="Integer 16" defaultValue="0" usesScalarValueType="YES"/>
+        <relationship name="reservations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Reservation" inverseName="car" inverseEntity="Reservation"/>
+    </entity>
+    <entity name="Reservation" representedClassName="Reservation" syncable="YES" codeGenerationType="class">
+        <attribute name="customerName" optional="NO" attributeType="String"/>
+        <attribute name="customerEmail" optional="NO" attributeType="String"/>
+        <attribute name="customerPhone" optional="NO" attributeType="String"/>
+        <attribute name="startDate" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="endDate" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="totalPrice" optional="NO" attributeType="Double" defaultValue="0.0" usesScalarValueType="YES"/>
+        <attribute name="createdAt" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="car" optional="NO" maxCount="1" deletionRule="Nullify" destinationEntity="Car" inverseName="reservations" inverseEntity="Car"/>
+    </entity>
+    <elements>
+        <element name="Car" positionX="-63" positionY="-18" width="128" height="189"/>
+        <element name="Reservation" positionX="144" positionY="-18" width="128" height="149"/>
+    </elements>
+</model>
